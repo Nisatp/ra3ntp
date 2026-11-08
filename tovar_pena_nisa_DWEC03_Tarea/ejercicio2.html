@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2</title>
+    <script>
+        // a) Función de Compresión
+        function comprobarCompresion() {
+            let entrada = document.getElementById("inputCadena").value;
+            let cajaResultado = document.getElementById("resultado");
+            
+            try {
+                // Compruebo con el patrón RegExp si la cadena tiene algún número
+                if (/\d/.test(entrada)) {
+                    throw new Error("Error: La cadena no puede contener números.");
+                }
+
+                let resultado = "";
+                let i = 0;
+
+                // Recorro la cadena manipulándola secuencialmente posición por posición como un array
+                while (i < entrada.length) {
+                    let char = entrada[i];
+                    let contador = 0;
+
+                    while (i < entrada.length && entrada[i] === char) {
+                        contador++;
+                        i++;
+                    }
+
+                    // Si el carácter detectado es un espacio, lo cambio por una interrogación '?'
+                    if (char === " ") char = "?";
+
+                    if (contador > 1) {
+                        resultado += contador + char;
+                    } else {
+                        resultado += char;
+                    }
+                }
+                cajaResultado.innerText = "Comprimido: " + resultado;
+            } catch (error) {
+                // Si salta el error por contener números, muestro el mensaje informativo
+                cajaResultado.innerText = error.message;
+            }
+        }
+
+        // b) Función de Descompresión
+        function comprobarDescompresion() {
+            let entrada = document.getElementById("inputCadena").value;
+            let cajaResultado = document.getElementById("resultado");
+            
+            let resultado = "";
+            let i = 0;
+
+            // Analizo de principio a fin la cadena en busca de patrones numéricos
+            while (i < entrada.length) {
+                if (/\d/.test(entrada[i])) {
+                    let numeroStr = "";
+                    while (i < entrada.length && /\d/.test(entrada[i])) {
+                        numeroStr += entrada[i];
+                        i++;
+                    }
+                    let repeticiones = parseInt(numeroStr, 10);
+                    let char = entrada[i];
+                    
+                    if (char === "?") char = " ";
+                    resultado += char.repeat(repeticiones);
+                    i++;
+                } else {
+                    let char = entrada[i];
+                    if (char === "?") char = " ";
+                    resultado += char;
+                    i++;
+                }
+            }
+            cajaResultado.innerText = "Original: " + resultado;
+        }
+    </script>
+</head>
+<body>
+    <h2>Ejercicio 2:  manipulación de cadenas</h2>
+    <input type="text" id="inputCadena" value="holaaaa mundo">
+    <button onclick="comprobarCompresion()">Comprimir</button>
+    <button onclick="comprobarDescompresion()">Descomprimir</button>
+    <p id="resultado"></p>
+</body>
+</html>

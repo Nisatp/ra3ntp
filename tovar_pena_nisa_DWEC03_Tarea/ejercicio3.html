@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3</title>
+    <script>
+        function gestionarIdioma() {
+            // Intento recuperar la clave directamente desde el objeto localStorage
+            let idioma = localStorage.idiomaWeb;
+
+            // Si detecto que está vacío, significa que es su primer acceso
+            if (!idioma) {
+                let entrada;
+                do {
+                    entrada = prompt("Seleccione su idioma / Select your language (ES / EN):");
+                    if (entrada !== null) {
+                        // Normalizo pasándolo a mayúsculas y eliminando los espacios
+                        entrada = entrada.toUpperCase().trim();
+                    }
+                    if (entrada !== "ES" && entrada !== "EN") {
+                        alert("Error: Entrada no válida. Debe introducir exactamente 'ES' o 'EN'.");
+                    }
+                } while (entrada !== "ES" && entrada !== "EN"); // Mantengo el bucle rígido si hay fallos
+
+                idioma = entrada;
+                // Almaceno la propiedad directamente en el almacén del navegador
+                localStorage.idiomaWeb = idioma; 
+            }
+
+            // Pinto el saludo final en la zona correspondiente de la página
+            let cabeceraIdioma = document.getElementById("saludoIdioma");
+            if (idioma === "ES") {
+                cabeceraIdioma.innerText = "Perfecto, has seleccionado Español.";
+            } else if (idioma === "EN") {
+                cabeceraIdioma.innerText = "Perfect, you have selected English.";
+            }
+        }
+        // Como el idioma se guarda en cuanto respondes, para hacer la prueba de las dos opciones, lo he abierto una ventana privada o de incógnito del navegador .
+        window.onload = gestionarIdioma;
+    </script>
+</head>
+<body>
+    <h2 id="saludoIdioma">Cargando idioma...</h2>
+</body>
+</html>

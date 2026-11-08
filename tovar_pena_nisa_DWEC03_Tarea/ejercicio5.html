@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 5</title>
+    <script>
+        function procesarDatosPantalla() {
+            // Extraigo el ancho y alto nativos desde las propiedades de screen
+            let anchoPantalla = screen.width;
+            let altoPantalla = screen.height;
+            
+            // Obtengo la orientación de la pantalla de forma segura con su tipo de entorno
+            let orientacionPantalla = screen.orientation ? screen.orientation.type : "No soportado";
+            
+            // Clasifico las dimensiones de ancho aplicando las reglas fijas de la tarea
+            let tipoDispositivo = "";
+            if (anchoPantalla < 768) {
+                tipoDispositivo = "movil";
+            } else if (anchoPantalla >= 768 && anchoPantalla < 1024) {
+                tipoDispositivo = "tablet";
+            } else {
+                tipoDispositivo = "escritorio";
+            }
+            
+            // Escribo de manera dinámica la información dentro del bloque HTML reservado
+            let cajaPantalla = document.getElementById("datosPantallaUsuario");
+            cajaPantalla.innerHTML = `
+                tipoDispositivo: "${tipoDispositivo}"<br>
+                resolucionPantalla: "${anchoPantalla}x${altoPantalla}"<br>
+                orientacionPantalla: "${orientacionPantalla}"
+            `;
+        }
+
+        window.onload = procesarDatosPantalla;
+    </script>
+</head>
+<body>
+    <h2>Ejercicio 5: Datos de Pantalla</h2>
+    <div id="datosPantallaUsuario">Procesando datos del dispositivo...</div>
+</body>
+</html>
